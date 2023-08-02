@@ -30,7 +30,7 @@ CREATE TABLE `Exercise3` (
 	ID INT AUTO_INCREMENT,			/* MỖI LẦN INSERT TĂNG LÊN 1 */
     NAME TEXT,						/* CHỨA CHUỖI TIẾNG ANH */
     BIRTHDATE DATE,					/* NGÀY SINH NHẬT */
-    GENDER BIT,						/* GỒM 3 GIÁ TRỊ */
+    GENDER ENUM('MALE', 'FEMALE', 'UNKNOW'),						/* GỒM 3 GIÁ TRỊ */
     ISDELETEDFLAG BOOL,				/* CÓ 2 GIÁ TRỊ */
     PRIMARY KEY (ID)				/* KHÓA CHÍNH */
 );
