@@ -3,7 +3,7 @@ USE `VTI_Assigment2`;
 /* TẠO BẢNG TRAINEE */
 DROP TABLE Trainee;
 CREATE TABLE Trainee (
-TraineeID INT,				/* ĐỊNH DANH THỰC TẬP SINH */
+    TraineeID INT,				/* ĐỊNH DANH THỰC TẬP SINH */
     Full_Name VARCHAR(50),		/* TÊN ĐẦY ĐỦ THỰC TẬP SINH */
     Birth_Date DATE,			/* NGÀY SINH THỰC TẬP SINH */
     Gender ENUM('MALE', 'FEMALE', 'UNKNOW'),					/* GIỚI TÍNH CHỈ CÓ 3 GIÁ TRỊ */
