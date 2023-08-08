@@ -26,3 +26,34 @@ VALUES (1,'Nguyen Thi Kim Phung', DATE '2001-06-01','FEMALE',20,20,50,07080001,'
 (8,'Nguyen Thi Kim C', DATE '2001-06-01','FEMALE',20,20,50,07080004,'Lop hoc rat tot','ID058'),
 (9,'Nguyen Thi Kim D', DATE '2001-06-01','FEMALE',20,20,50,07080004,'Lop hoc rat tot','ID09'),
 (10,'Nguyen Thi Kim E', DATE '2001-06-01','FEMALE',20,20,50,07080004,'Lop hoc rat tot','ID10');
+
+/* QUESTION 2 */
+SELECT COUNT(F.TraineeID), F.Birth_Date
+FROM fresher_management AS F
+WHERE	(F.ET_IQ + F.ET_Gmath) >= 20 AND 
+		F.ET_IQ >= 8 AND 
+        F.ET_Gmath >= 8 AND 
+        F.ET_English >= 18
+GROUP BY F.Birth_Date;
+ /* QUESTION 3 */
+SELECT 	F.Full_Name, F.Gender,
+		TIMESTAMPDIFF(YEAR, F.Birth_Date, CURDATE()) AS AGE
+FROM fresher_management AS F
+WHERE LENGTH(F.Full_Name) = (	SELECT MAX(LENGTH(F1.Full_Name))
+								FROM fresher_management AS F1)
+LIMIT 1;
+ /* QUESTION 4 */
+/* SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY','')); */
+SELECT *
+FROM fresher_management AS F
+WHERE	(F.ET_IQ + F.ET_Gmath) >= 20 AND 
+		F.ET_IQ >= 8 AND 
+        F.ET_Gmath >= 8 AND 
+        F.ET_English >= 18;
+/* QUESTION 5 */
+DELETE FROM Fresher_management WHERE TraineeID = 3;
+/* QUESTION 6 */
+UPDATE Fresher_management AS F
+SET F.Training_Class = 2
+WHERE TraineeID = 5;
+
