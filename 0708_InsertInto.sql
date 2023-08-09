@@ -21,14 +21,24 @@ VALUES (1,'Nguyen Thi Kim Phung', DATE '2001-06-01','FEMALE',20,20,50,07080001,'
 (3,'Nguyen Trinh Tra Giang', DATE '2001-01-18','FEMALE',20,20,50,07080002,'Lop hoc rat tot','ID03'),
 (4,'Van Phuc Huy', DATE '2001-06-01','FEMALE',20,20,50,07080002,'Lop hoc rat tot','ID04'),
 (5,'Nguyen Thi Kim', DATE '2001-06-01','FEMALE',20,20,50,07080003,'Lop hoc rat tot','ID05'),
-(6,'Nguyen Thi Kim A', DATE '2001-06-01','FEMALE',20,20,50,07080003,'Lop hoc rat tot','ID06'),
-(7,'Nguyen Thi Kim B', DATE '2001-06-01','FEMALE',20,20,50,07080003,'Lop hoc rat tot','ID07'),
-(8,'Nguyen Thi Kim C', DATE '2001-06-01','FEMALE',20,20,50,07080004,'Lop hoc rat tot','ID058'),
-(9,'Nguyen Thi Kim D', DATE '2001-06-01','FEMALE',20,20,50,07080004,'Lop hoc rat tot','ID09'),
-(10,'Nguyen Thi Kim E', DATE '2001-06-01','FEMALE',20,20,50,07080004,'Lop hoc rat tot','ID10');
+(6,'Nguyen Thi Kim 1', DATE '2001-06-01','FEMALE',20,20,50,07080003,'Lop hoc rat tot','ID06'),
+(7,'Nguyen Thi Kim 2', DATE '2001-06-22','FEMALE',20,20,30,07080003,'Lop hoc rat tot','ID07'),
+(8,'Nguyen Thi Kim 3', DATE '2001-04-01','FEMALE',20,20,30,07080004,'Lop hoc rat tot','ID08'),
+(9,'Nguyen Thi Kim 4', DATE '2001-05-01','FEMALE',20,20,30,07080004,'Lop hoc rat tot','ID09'),
+(10,'Nguyen Thi Kim 5', DATE '2001-08-01','FEMALE',20,20,40,07080004,'Lop hoc rat tot','ID10'),
+(11,'Nguyen Thi Kim 6', DATE '2001-09-01','FEMALE',20,20,50,07080004,'Lop hoc rat tot','ID11'),
+(12,'Nguyen Thi Kim 7', DATE '2001-10-01','FEMALE',20,20,50,07080004,'Lop hoc rat tot','ID12'),
+(13,'Nguyen Thi Kim 8', DATE '2001-06-02','FEMALE',10,20,50,07080004,'Lop hoc rat tot','ID13'),
+(14,'Nguyen Kim 9', DATE '2001-06-03','MALE',20,10,50,07080004,'Lop hoc rat tot','ID14'),
+(15,'Nguyen Kim 10', DATE '2001-06-04','MALE',10,20,50,07080004,'Lop hoc rat tot','ID15'),
+(16,'Nguyen Kim 11', DATE '2001-06-05','MALE',10,20,50,07080004,'Lop hoc rat tot','ID16'),
+(17,'Nguyen Kim 12', DATE '2001-06-16','MALE',10,20,50,07080004,'Lop hoc rat tot','ID17'),
+(18,'Nguyen Kim 13', DATE '2001-06-17','MALE',10,20,50,07080004,'Lop hoc rat tot','ID18'),
+(19,'Nguyen Kim 14', DATE '2001-06-08','MALE',20,8,50,07080004,'Lop hoc rat tot','ID19'),
+(20,'Nguyen Kim 15', DATE '2001-06-19','MALE',20,8,50,07080004,'Lop hoc rat tot','ID20');
 
 /* QUESTION 2 */
-SELECT COUNT(F.TraineeID), F.Birth_Date
+SELECT COUNT(F.TraineeID) AS 'TONG SO HS DAU', F.Birth_Date AS 'NGAY SINH'
 FROM fresher_management AS F
 WHERE	(F.ET_IQ + F.ET_Gmath) >= 20 AND 
 		F.ET_IQ >= 8 AND 
