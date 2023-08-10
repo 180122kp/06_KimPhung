@@ -38,7 +38,7 @@ VALUES (1,'Nguyen Thi Kim Phung', DATE '2001-06-01','FEMALE',20,20,50,07080001,'
 (20,'Nguyen Kim 15', DATE '2001-06-19','MALE',20,8,50,07080004,'Lop hoc rat tot','ID20');
 
 /* QUESTION 2 */
-SELECT COUNT(F.TraineeID) AS 'TONG SO HS DAU', F.Birth_Date AS 'NGAY SINH'
+SELECT COUNT(F.TraineeID) AS 'TONG SO HS DAU', MONTH(F.Birth_Date) AS 'THÁNG SINH', GROUP_CONCAT(F.Full_Name) AS 'LIST PASSED'
 FROM fresher_management AS F
 WHERE	(F.ET_IQ + F.ET_Gmath) >= 20 AND 
 		F.ET_IQ >= 8 AND 
@@ -50,10 +50,9 @@ SELECT 	F.Full_Name, F.Gender,
 		TIMESTAMPDIFF(YEAR, F.Birth_Date, CURDATE()) AS AGE
 FROM fresher_management AS F
 WHERE LENGTH(F.Full_Name) = (	SELECT MAX(LENGTH(F1.Full_Name))
-								FROM fresher_management AS F1)
-LIMIT 1;
+								FROM fresher_management AS F1);
  /* QUESTION 4 */
-/* SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY','')); */
+SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY','')); 
 SELECT *
 FROM fresher_management AS F
 WHERE	(F.ET_IQ + F.ET_Gmath) >= 20 AND 
