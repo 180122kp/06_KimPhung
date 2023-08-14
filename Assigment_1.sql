@@ -208,3 +208,28 @@ WHERE LENGTH(Content) > 5;
 -- select data--
 SELECT *
 FROM QA03;
+-- QUERY QUESTION 04 --
+CREATE OR REPLACE VIEW QA04
+AS
+	SELECT 		D.*, COUNT(A.DepartmentID)
+	FROM		Department D
+	INNER JOIN 	`Account` A ON D.DepartmentID = A.DepartmentID
+	GROUP BY	D.DepartmentID
+	HAVING		COUNT(A.DepartmentID) = (
+										SELECT 		COUNT(A.DepartmentID)
+										FROM		Department D
+										INNER JOIN 	`Account` A ON D.DepartmentID = A.DepartmentID
+										GROUP BY	D.DepartmentID
+										HAVING		COUNT(A.DepartmentID)
+										ORDER BY	COUNT(A.DepartmentID) DESC
+										);
+SELECT * FROM QA04;
+-- QUERY QUESTION 05 --
+CREATE OR REPLACE VIEW QA05
+AS
+	SELECT 		Q.*, A.FullName
+	FROM 		Question Q
+	INNER JOIN 	`Account` A ON Q.CreatorID = A.AccountID
+	WHERE		SUBSTRING_INDEX(FullName,' ',1) = 'Nguyen';
+-- SELECT DATA --
+SELECT * FROM QA05;
