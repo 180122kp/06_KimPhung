@@ -164,15 +164,47 @@ JOIN `Department` D ON A.DepartmentID = D.DepartmentID
 GROUP BY A.DepartmentID
 HAVING COUNT(A.AccountID) > 3;
 -- QUERY QUESTION 5 --
-SELECT GROUP_CONCAT(Q.QuestionID) AS 'List Question', Q.CategoryName 
-FROM Question Q
-JOIN CategoryQuestion CG ON Q.CategoryID = CG.CategoryID
-JOIN Exam E ON E.CategoryID = CG.CategoryID
-GROUP BY E.CategoryID
-HAVING MAX(Q.QuestionID);
+SELECT 		Q.QuestionID, Q.Content, Q.CategoryID, Q.TypeID, Q.CreatorID, Q.CreateDate, Count(Q.Content) AS 'SO LUONG'
+FROM		Question Q
+INNER JOIN 	ExamQuestion EQ ON Q.QuestionID = EQ.QuestionID
+GROUP BY	Q.Content
+HAVING		COUNT(Q.Content) = (SELECT	MAX(CountQ)
+								FROM	(SELECT 		COUNT(Q.QuestionID) AS CountQ
+										FROM			ExamQuestion EQ
+										INNER JOIN 		Question Q ON EQ.QuestionID = Q.QuestionID
+										GROUP BY		Q.QuestionID) AS MaxContent);
 -- QUERY QUESTION 6 --
 SELECT COUNT(Q.QuestionID) AS 'List QuestionName', CG.CategoryName
 FROM Question Q
 JOIN CategoryQuestion CG ON Q.CategoryID = CG.CategoryID
-GROUP BY CG.CategoryID
+GROUP BY CG.CategoryID;
 -- QUERY QUESTION 7 --
+/* LESSION 6*/
+-- QUERY QUESTION 01 --
+CREATE OR REPLACE VIEW QA01 AS
+SELECT *
+FROM Account A 
+WHERE DepartmentID = 1;
+-- SELECT DATA QUESTION 01 --
+SELECT *
+FROM QA01;
+-- QUERY QUESTION 02 --
+CREATE OR REPLACE VIEW QA02 AS
+SELECT A.*, COUNT(A.AccountID) AS 'SO LUONG'
+FROM Account A 
+GROUP BY DepartmentID
+HAVING COUNT(A.AccountID) = ( SELECT COUNT(A1.AccountID)
+								FROM Account A1
+                                GROUP BY A1.AccountID
+								ORDER BY COUNT(A1.AccountID) DESC);
+SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
+SELECT * 
+FROM QA02;
+-- QUERY QUESTION 03 --
+CREATE OR REPLACE VIEW QA03 AS
+SELECT *
+FROM QUESTION 
+WHERE LENGTH(Content) > 5;
+-- select data--
+SELECT *
+FROM QA03;

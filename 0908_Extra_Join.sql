@@ -42,11 +42,17 @@ WHERE EST.Skill_Code = 'java core';
 SELECT D.Department_Number, D.Department_Name, ET.Employee_Number
 FROM Department D
 JOIN Employee_Table ET ON D.Department_Number = ET.Department_Number
-GROUP BY ET.Employee_Number
+GROUP BY D.Department_Number
 HAVING COUNT(ET.Employee_Number) > 3;
 /* QUERY QUESTION 5 */
-SELECT *
+SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
+SELECT CONCAT(ET.Employee_Name), D.Department_Number
+FROM Employee_Table ET
+JOIN Department D ON D.Department_Number = ET.Department_Number
+GROUP BY D.Department_Number ;
+/* QUERY QUESTION 6 */
+SELECT ET.Employee_Number,ET.Employee_Name
 FROM Employee_Table ET
 JOIN Employee_Skill_Table EST ON ET.Employee_Number = EST.Employee_Number
-GROUP BY  ET.Employee_Number
-HAVING COUNT(EST.Skill_Code)>1
+GROUP BY  ET.Employee_Number,ET.Employee_Name
+HAVING COUNT(DISTINCT EST.Skill_Code)>1
