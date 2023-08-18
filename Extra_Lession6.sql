@@ -102,7 +102,7 @@ DELIMITER //
 CREATE PROCEDURE QA02()
 BEGIN
 	DECLARE `remove` INT;
-		DELETE FROM Prọects WHERE ProjectCompletedOn IS NOT NULL AND 
+		DELETE FROM Projects WHERE ProjectCompletedOn IS NOT NULL AND 
 								DATE_ADD(ProjectStartDate, INTERVAL 3 MONTH) > CURDATE();
 		SET `remove` = ROW_COUNT();
         SELECT `remove`;
@@ -135,9 +135,38 @@ BEGIN
 
 	SELECT 		EmployeeID, CONCAT(EmployeeLastName, ' ', EmployeeFirstName)
     FROM		Employee
-    WHERE		EmployeeID NOT IN (SELECT EmployeeID FROM Work_Done);
+    WHERE		in_EmployeeID=EmployeeID AND EmployeeID NOT IN (SELECT EmployeeID FROM Work_Done);
 
 END //
 DELIMITER ;
 
 call QA04(1);
+/* Viết triggers để tránh trường hợp người dùng nhập thông tin module Project không hợp
+lệ
+(Project_Modules.ProjectModulesDate < Projects.ProjectStartDate,
+Project_Modules.ProjectModulesCompletedOn > Projects.ProjectCompletedOn) */
+DROP TRIGGER IF EXISTS exception;
+DELIMITER //
+CREATE TRIGGER exception
+BEFORE UPDATE ON Project_Modules
+FOR EACH ROW
+BEGIN
+	-- khởi tạo biến --
+	DECLARE projectStartDate DATE;
+    DECLARE projectCompletedOn DATE;
+    -- lấy thông tin ngày bắt đầu và ngày hoàn thành --
+   SELECT ProjectStartDate, ProjectCompletedOn INTO projectStartDate, projectCompletedOn
+    FROM Projects
+    WHERE Projects.ProjectID = NEW.ProjectID; -- Giả sử có trường ProjectID trong Project_Modules
+
+    -- Kiểm tra điều kiện không hợp lệ và nếu thỏa mãn, ngăn chặn thao tác
+    IF NEW.ProjectModulesDate < projectStartDate AND NEW.ProjectModulesCompletedOn > projectCompletedOn THEN
+       /* SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Invalid Project Module Dates';*/
+       SET NEW.ProjectModulesDate = NOW() AND NEW.ProjectModulesCompletedOn = NOW() ;
+    END IF;
+END //
+DELIMITER ;
+
+INSERT INTO Project_Modules (ProjectID	, EmployeeID, ProjectModulesDate, ProjectModulesCompletedOn	, ProjectModulesDescription	)
+VALUE						(	1		,	1		,	'2019-06-01'	, '2019-06-01'		,	'Làm đúng hạn TEST'			),
+							(	2		,	2		,	'2019-07-07'	, '2019-06-06'		,	'Làm trước hạn TEST'			);

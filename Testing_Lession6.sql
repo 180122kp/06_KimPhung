@@ -1,5 +1,5 @@
 USE testing_system_assignment_1;
--- Question 1: Tạo store để người dùng nhập vào tên phòng ban và in ra tất cả các account thuộc phòng ban đó
+-- Question 1: Tạo store để người dùng nhập vào tên phòng ban và in ra tất cả các account thuộc phòng ban đó--
 DELIMITER $$
 DROP PROCEDURE IF EXISTS sp_accountOfDepartment;
 CREATE PROCEDURE sp_accountOfDepartment(IN in_department_name NVARCHAR(50))
@@ -46,7 +46,7 @@ BEGIN
 END$$
 DELIMITER ;
 
-call testingsystem.sp_typeQuestionOfMonth();
+call sp_typeQuestionOfMonth();
 
 
 -- Question 4: Tạo store để trả ra id của type question có nhiều câu hỏi nhất
@@ -147,7 +147,7 @@ DELIMITER ;
 
 -- Question 8: Viết 1 store cho phép người dùng nhập vào Essay hoặc Multiple-Choice
 -- để thống kê câu hỏi essay hoặc multiple-choice nào có content dài nhất
-DROP PROCEDURE IF EXISTS sp_maxContentWithTypeName;
+DROP PROCEDURE IF EXISTS sp_maxContentWithTypeID;
 DELIMITER $$
 CREATE PROCEDURE sp_maxContentWithTypeID(IN in_TypeName VARCHAR(15))
 BEGIN
@@ -163,7 +163,7 @@ BEGIN
 END$$
 DELIMITER ;
 
-
+CALL sp_maxContentWithTypeID('Essay');
 -- Question 9: Viết 1 store cho phép người dùng xóa exam dựa vào ID
 DROP PROCEDURE IF EXISTS sp_DeleteExamWithID;
 DELIMITER $$
@@ -285,3 +285,4 @@ CREATE PROCEDURE sp_CountQuesBefore6Month()
 DELIMITER ;
 
 CALL sp_CountQuesBefore6Month;
+SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
