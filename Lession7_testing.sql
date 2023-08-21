@@ -17,23 +17,7 @@ INSERT INTO `Group`	(  GroupName, CreatorID	, CreateDate)
 VALUE 				(N'Testing System',12,'2019-03-05');
 SELECT * FROM `Group`;
 
--- Question 2: Tạo trigger Không cho phép người dùng thêm bất kỳ user nào vào
--- department "Sale" nữa, khi thêm thì hiện ra thông báo "Department "Sale" cannot add
--- more user"
-DROP TRIGGER IF EXISTS QA02;
-DELIMITER //
-	CREATE TRIGGER QA02
-    BEFORE INSERT ON `Department`
-    FOR EACH ROW
-    BEGIN
-			IF (NEW.DepartmentName = 'Sale') THEN
-				SIGNAL SQLSTATE '14500'
-				SET MESSAGE_TEXT = 'Department "Sale" cannot add more user';
-			END IF;
-    END//
-DELIMITER ;
-INSERT INTO Department	(DepartmentName)
-VALUE					(N'Sale');
+
 -- Question 3: Cấu hình 1 group có nhiều nhất là 5 user.
 DROP TRIGGER IF EXISTS QA03;
 DELIMITER //
